@@ -50,24 +50,28 @@ public class MainController implements Initializable {
     }
 
     private void setComboBox() throws SQLException {
-        cbTables.setItems(FXCollections.observableArrayList(dbManager.getDBtables()));
-
-        cbTables.getSelectionModel().select(0);
+        ObservableList<String> tableNames = FXCollections.observableArrayList(dbManager.getDBtables());
+        if(!tableNames.isEmpty()) {
+            cbTables.setItems(tableNames);
+            cbTables.getSelectionModel().select(0);
+        }
     }
     public void generateTableView() throws SQLException {
         tableView.getItems().clear();
+        if(!cbTables.getItems().isEmpty()) {
+            String tableName = cbTables.getSelectionModel().getSelectedItem().toString();
+            ArrayList<TableColumn> columns = dbManager.getTableColumns(tableName);
+            tableView.getColumns().clear();
 
-        String tableName = cbTables.getSelectionModel().getSelectedItem().toString();
-        ArrayList<TableColumn> columns = dbManager.getTableColumns(tableName);
-        tableView.getColumns().clear();
+            for (TableColumn column : columns) {
+                tableView.getColumns().add(column);
+            }
 
-        for(TableColumn column : columns){
-            tableView.getColumns().add(column);
+            tableView.setItems(dbManager.getTableContent(tableName));
         }
 
-        tableView.setItems(dbManager.getTableContent(tableName));
-
     }
+
 
 
 }
