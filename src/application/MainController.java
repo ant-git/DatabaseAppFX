@@ -60,29 +60,6 @@ public class MainController implements Initializable {
     public void generateTableView() throws SQLException {
         tableView.getItems().clear();
         if(!cbTables.getItems().isEmpty()) {
-            //tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-          //  tableView.setEditable(true);
-          //  tableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-                //Check whether item is selected and set value of selected item to Label
-               // if (tableView.getSelectionModel().getSelectedItem() != null) {
-                  //  TableView.TableViewSelectionModel selectionModel = tableView.getSelectionModel();
-                  //  ObservableList selectedCells = selectionModel.getSelectedCells();
-                   // TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-                   // Object val = tablePosition.getTableColumn().getCellData(newValue);
-
-                    //System.out.println("Selected Value " + val);
-                    //System.out.println("Selected row " + newValue);
-                   // ObservableList<TableColumn> columns = tableView.getColumns();
-                    //String idColumn = columns.get(0).getText();
-                    //System.out.println(idColumn);
-                    //System.out.printf("DB:%s\nColumn: %s\nid: %s\nidValue:\nnewValue: %s\n", dbname, tablePosition.getTableColumn().getText(), idColumn, newValue.toString());
-
-                    //System.out.println(newValue.getClass().toString());
-                    //UPDATE `mydbtest`.`animal` SET `anim_name`='batch3fdf' WHERE `id`='4';
-                    //dbManager.cellUpdate(dbname, tablePosition.getTableColumn().getText(), newValue.toString(), );
-               // }
-            //});
-
             String tableName = cbTables.getSelectionModel().getSelectedItem().toString();
             ArrayList<TableColumn> columns = dbManager.getTableColumns(tableName);
             tableView.getColumns().clear();
