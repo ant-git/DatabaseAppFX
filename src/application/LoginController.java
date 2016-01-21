@@ -35,6 +35,7 @@ public class LoginController implements Initializable{
     @FXML
     private Button btnConnect;
 
+
     Connection connection;
 
 
@@ -111,6 +112,7 @@ public class LoginController implements Initializable{
     private void openMainWindow() throws IOException {
         MainController mainController = new MainController();
         mainController.setConnection(connection);
+        mainController.setDBname(dbname.getText());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
         fxmlLoader.setController(mainController);
         Parent root = fxmlLoader.load();

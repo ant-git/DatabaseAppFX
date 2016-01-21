@@ -12,7 +12,6 @@ import javafx.util.StringConverter;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,11 +55,10 @@ public class DBManager {
                     return new SimpleStringProperty(param.getValue().get(j));
                 }
             });
+
+
             Callback<TableColumn<Map, String>, TableCell<Map, String>> cellFactoryForMap
-                    = new Callback<TableColumn<Map, String>, TableCell<Map, String>>() {
-                @Override
-                public TableCell call(TableColumn p) {
-                    return new TextFieldTableCell(new StringConverter() {
+                    = p -> new TextFieldTableCell(new StringConverter() {
                         @Override
                         public String toString(Object t) {
                             return t.toString();
@@ -71,15 +69,13 @@ public class DBManager {
                             return string;
                         }
                     });
-                }
-            };
 
-            if (j != 1) {
+           // if (j != 1) {
                 col.setCellFactory(cellFactoryForMap);
-            }
+           // }
+            col.setMaxWidth(200);
             columns.add(col);
         }
-        //connection.close();
         resultSet.close();
         return columns;
     }
@@ -91,15 +87,24 @@ public class DBManager {
                 for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
                     row.add(resultSet.getString(i));
                 }
-                System.out.println("Row [1] added " + row);
                 content.add(row);
             }
 
             resultSet.close();
-            //connection.close();
             return content;
     }
 
+    public void cellUpdate(String dbname, String columnName, String tableName, String id, String idValue, String newValue) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE '?'.'?' SET '?' = '?' WHERE '?' = '?'");
+        //"UPDATE `mydbtest`.`animal` SET `anim_name`='batch3fdf' WHERE `id`='4'";
+        preparedStatement.setString(1, dbname);
+        preparedStatement.setString(2, tableName);
+        preparedStatement.setString(3, columnName);
+        preparedStatement.setString(4, newValue);
+        preparedStatement.setString(4, id);
+        preparedStatement.setString(6, idValue);
+        System.out.println(preparedStatement.toString());
 
+    }
 
 }
