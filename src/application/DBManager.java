@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * Created by antant on 20/01/16.
+ * Created by Anton
  */
 public class DBManager {
     Connection connection;
@@ -49,15 +49,14 @@ public class DBManager {
         int columnCount = getResultSet(tableName).getMetaData().getColumnCount();
         for(int i=0; i<columnCount; i++){
             final int j = i;
-            TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
-            col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<String>, String>, ObservableValue<String>>() {
+            TableColumn column = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
+            column.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<String>, String>, ObservableValue<String>>() {
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList<String>, String> param) {
                     return new SimpleStringProperty(param.getValue().get(j));
                 }
             });
 
-
-            Callback<TableColumn<Map, String>, TableCell<Map, String>> cellFactoryForMap
+            Callback<TableColumn<Map, String>, TableCell<Map, String>> cellFactory
                     = p -> new TextFieldTableCell(new StringConverter() {
                         @Override
                         public String toString(Object t) {
@@ -70,11 +69,10 @@ public class DBManager {
                         }
                     });
 
-           // if (j != 1) {
-                col.setCellFactory(cellFactoryForMap);
-           // }
-            col.setMaxWidth(200);
-            columns.add(col);
+
+            column.setCellFactory(cellFactory);
+            column.setMaxWidth(200);
+            columns.add(column);
         }
         resultSet.close();
         return columns;
@@ -94,17 +92,17 @@ public class DBManager {
             return content;
     }
 
-    public void cellUpdate(String dbname, String columnName, String tableName, String id, String idValue, String newValue) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE '?'.'?' SET '?' = '?' WHERE '?' = '?'");
-        //"UPDATE `mydbtest`.`animal` SET `anim_name`='batch3fdf' WHERE `id`='4'";
-        preparedStatement.setString(1, dbname);
-        preparedStatement.setString(2, tableName);
-        preparedStatement.setString(3, columnName);
-        preparedStatement.setString(4, newValue);
-        preparedStatement.setString(4, id);
-        preparedStatement.setString(6, idValue);
-        System.out.println(preparedStatement.toString());
-
-    }
+//    public void cellUpdate(String dbname, String columnName, String tableName, String id, String idValue, String newValue) throws SQLException {
+//        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE '?'.'?' SET '?' = '?' WHERE '?' = '?'");
+//        //"UPDATE `mydbtest`.`animal` SET `anim_name`='batch3fdf' WHERE `id`='4'";
+//        preparedStatement.setString(1, dbname);
+//        preparedStatement.setString(2, tableName);
+//        preparedStatement.setString(3, columnName);
+//        preparedStatement.setString(4, newValue);
+//        preparedStatement.setString(4, id);
+//        preparedStatement.setString(6, idValue);
+//        System.out.println(preparedStatement.toString());
+//
+//    }
 
 }

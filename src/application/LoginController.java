@@ -34,11 +34,7 @@ public class LoginController implements Initializable{
     private TextField port;
     @FXML
     private Button btnConnect;
-
-
     Connection connection;
-
-
 
     public void connect() throws IOException {
         lblStatus.setText("");
