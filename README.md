@@ -1,2 +1,2 @@
 # DatabaseAppFX
-Simple database application that connects to MySQL database and displays data suing dynamic TableView.
+Simple database application that connects to MySQL database and displays data using dynamic TableView.
